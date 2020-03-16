@@ -1,30 +1,12 @@
 import os
 
 
-
-def tree_branch(dirName):
-
-    dirName = str(input('Input directory:'))
-    
-    lst_files = os.listdir(dirName)
-
-    all_files = list()
-   
-    for entry in lst_files:
-
-        try:
+def walk(dirname, file_handler):
+    items = os.listdir(dirname)
+    for item in items:
+        path = os.path.join(dirname, item)
         
-            fullPath = os.path.join(dirName, entry)
-
-            if os.path.isdir(fullPath):
-
-                all_files = all_files + getlst_files(fullPath)
-        
-            else:
-
-                all_files.append(fullPath)
-
-        except (OSError, TypeError, NameError):
-                
-            print(all_files)
- 
+        if os.path.isfile(path):
+            file_handler.write(path + '\n')
+        else:
+            walk(path, file_handler)
